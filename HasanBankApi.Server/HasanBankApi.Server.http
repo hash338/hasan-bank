@@ -1,0 +1,6 @@
+@HasanBankApi.Server_HostAddress = http://localhost:5125
+
+GET {{HasanBankApi.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

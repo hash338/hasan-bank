@@ -1,0 +1,2 @@
+C:\Users\hasan\source\repos\HasanBankApi\hasanbankapi.client\obj\Debug\hasanbankapi.client.esproj.CoreCompileInputs.cache
+C:\Users\hasan\source\repos\HasanBankApi\HasanBankApi.Server\hasanbankapi.client\obj\Debug\hasanbankapi.client.esproj.CoreCompileInputs.cache

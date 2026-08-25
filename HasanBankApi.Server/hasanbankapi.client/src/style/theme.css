@@ -1,0 +1,13 @@
+:root{
+  --green:#0f2f20;
+  --green2:#123a27;
+  --bg:#ffffff;
+  --muted:#f4f6f5;
+  --card:#0f2f20;
+  --text:#1a1a1a;
+  --line:#e6e8e7;
+}
+
+*{ box-sizing:border-box; font-family: Inter, system-ui, Arial; }
+body{ margin:0; background:#f3f5f4; color:var(--text); }
+

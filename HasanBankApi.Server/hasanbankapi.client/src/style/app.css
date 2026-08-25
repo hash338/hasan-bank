@@ -1,0 +1,235 @@
+.app-shell {
+    display: flex;
+    height: 100vh;
+    background: #fff;
+}
+
+.content {
+    flex: 1;
+    padding: 22px 26px;
+    overflow: auto;
+}
+
+.page-title {
+    font-size: 44px;
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.hi {
+    font-size: 18px;
+    margin: 0 0 18px;
+}
+
+.gridTop {
+    display: grid;
+    grid-template-columns: 1.55fr 0.9fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.cards2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.cardBank {
+    height: 150px;
+    border-radius: 14px;
+    padding: 16px 18px;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+}
+
+.content {
+    flex: 1;
+    padding: 22px 26px;
+    overflow: auto;
+    background: #f3f5f4;
+}
+
+/* Latest Transactions pills (match screenshot) */
+.txPill {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.10);
+    padding: 14px 16px;
+    margin: 14px 0;
+    display: grid;
+    grid-template-columns: 26px 130px 1fr 1fr 34px 110px;
+    gap: 16px;
+    align-items: center;
+}
+
+.txArrow {
+    font-size: 18px;
+    font-weight: 900;
+    width: 26px;
+    text-align: center;
+}
+
+.txDate {
+    color: #7a7f7d;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.txName {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.txBell {
+    cursor: pointer;
+    font-size: 16px;
+    color: #111;
+    opacity: 0.85;
+    user-select: none;
+}
+
+.txAmount {
+    justify-self: end;
+    background: var(--green);
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-weight: 900;
+    min-width: 92px;
+    text-align: right;
+}
+
+.hiBig {
+    font-size: 40px;
+    font-weight: 500;
+    margin: 0 0 10px;
+}
+
+.cardBank .stripe {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    width: 56px;
+    height: 126px;
+    border-radius: 10px;
+    background: #fff;
+    opacity: 0.95;
+}
+
+.cardBank .bankIcon {
+    position: absolute;
+    right: 28px;
+    top: 24px;
+    width: 26px;
+    height: 26px;
+    z-index: 2;
+    opacity: 1;
+}
+
+.cardBank .money {
+    font-size: 34px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.cardBank .mask {
+    font-size: 14px;
+    margin-top: 12px;
+    letter-spacing: 1px;
+    opacity: 0.95;
+}
+
+.cardBank .typeLabel {
+    position: absolute;
+    left: 18px;
+    bottom: 14px;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.summaryRight {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    height: auto;
+    min-height: 180px;
+    margin-bottom: 16px;
+}
+
+    .summaryRight .title {
+        font-weight: 800;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .summaryRight .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+        .summaryRight .row + .row {
+            border-top: 1px solid var(--line);
+        }
+
+    .summaryRight .valIncome {
+        color: #2d8a45;
+        font-weight: 800;
+    }
+
+    .summaryRight .valExpense {
+        color: #b23b3b;
+        font-weight: 800;
+    }
+
+.sendRight {
+    margin-top: 16px;
+}
+
+    .sendRight .title {
+        font-weight: 800;
+        font-size: 16px;
+        margin: 0 0 10px;
+    }
+
+    .sendRight .label {
+        font-size: 13px;
+        margin: 10px 0 6px;
+        color: #6b6f6d;
+    }
+
+    .sendRight .btn {
+        margin-top: 14px;
+        width: 100%;
+        padding: 14px;
+        background: var(--green);
+        border: 0;
+        color: #fff;
+        border-radius: 10px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+.txRow {
+    display: grid;
+    grid-template-columns: 22px 120px 1fr 1fr 44px 110px;
+    gap: 12px;
+    align-items: center;
+    padding: 16px 14px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+}
+
+.txAmount {
+    justify-self: end;
+    background: var(--green);
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-weight: 800;
+    width: 92px;
+    text-align: right;
+}

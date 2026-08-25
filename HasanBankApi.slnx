@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="hasanbankapi.client/hasanbankapi.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="HasanBankApi.Server/HasanBankApi.Server.csproj" />
+</Solution>

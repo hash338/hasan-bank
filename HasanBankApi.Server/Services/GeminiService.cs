@@ -16,8 +16,12 @@ public class GeminiService
 
     public async Task<string> ChatAsync(string userMessage)
     {
-        var apiKey = _config["Gemini:ApiKey"]!;
-        var model = _config["Gemini:Model"]!;
+        var apiKey = _config["Gemini:ApiKey"];
+        var model = _config["Gemini:Model"] ?? "gemini-2.5-flash";
+
+        if (string.IsNullOrWhiteSpace(apiKey))
+            return "AI assistant is not configured on this server (missing Gemini API key).";
+
         var url = $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
 
         var body = new

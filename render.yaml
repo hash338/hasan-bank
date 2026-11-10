@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: hasan-bank
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      # Render generates and stores this one for you
+      - key: Jwt__Secret
+        generateValue: true
+      # Set these in the Render dashboard after the first deploy
+      - key: Gemini__ApiKey
+        sync: false
+      - key: Seed__AdminPassword
+        sync: false

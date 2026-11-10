@@ -157,11 +157,14 @@ public class ClientService
             throw new Exception("Insufficient balance");
 
         // Weekly limit check
-        var weeklySpent = await _db.Transactions
+        // NOTE: summed in memory on purpose — SQLite cannot SUM decimal columns.
+        var weeklyAmounts = await _db.Transactions
             .Where(t => t.FromAccountId == fromAccount.Id &&
                         t.Type == "SEND_MONEY" &&
                         t.CreatedAt >= DateTime.UtcNow.AddDays(-7))
-            .SumAsync(t => t.Amount);
+            .Select(t => t.Amount)
+            .ToListAsync();
+        var weeklySpent = weeklyAmounts.Sum();
 
         if (weeklySpent + req.Amount > fromAccount.WeeklyLimit)
             throw new Exception("Weekly limit exceeded");

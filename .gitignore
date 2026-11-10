@@ -1,0 +1,25 @@
+# .NET build output
+bin/
+obj/
+publish/
+
+# IDEs
+.vs/
+*.user
+*.suo
+
+# Node
+node_modules/
+dist/
+
+# Local SQLite database
+*.db
+*.db-shm
+*.db-wal
+
+# Local secrets
+appsettings.Local.json
+
+# OS
+Thumbs.db
+.DS_Store

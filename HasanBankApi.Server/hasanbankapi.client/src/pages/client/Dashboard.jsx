@@ -4,6 +4,7 @@ import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import TransactionRow from "../../ui/TransactionRow";
 import MessageDialog from "../../ui/MessageDialog";
+import { DashboardSkeleton } from "../../ui/Skeletons";
 
 
 export default function Dashboard() {
@@ -27,8 +28,8 @@ export default function Dashboard() {
     const hasChecking = useMemo(() => accounts.some((a) => a.type === "CHECKING"), [accounts]);
     const hasSavings = useMemo(() => accounts.some((a) => a.type === "SAVINGS"), [accounts]);
 
-    const refresh = async () => {
-        setLoading(true);
+    const refresh = async (silent = false) => {
+        if (!silent) setLoading(true);
         const [p, a, s, w] = await Promise.all([
             api.get("/api/client/profile"),
             api.get("/api/client/accounts"),
@@ -71,13 +72,13 @@ export default function Dashboard() {
             setToPayeeAddress("");
             setAmount("");
             setMessage("");
-            await refresh();
+            await refresh(true);
         } catch (e) {
             setSendErr(e?.response?.data?.message || "Send failed");
         }
     };
 
-    if (loading) return <div className="page-title">Dashboard</div>;
+    if (loading) return <DashboardSkeleton />;
 
     const checking = accounts.find((a) => a.type === "CHECKING");
     const savings = accounts.find((a) => a.type === "SAVINGS");

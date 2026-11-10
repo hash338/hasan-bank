@@ -3,6 +3,7 @@ import { api } from "../../api/http";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
+import { AccountsSkeleton } from "../../ui/Skeletons";
 
 export default function Accounts() {
   const [accounts, setAccounts] = useState([]);
@@ -19,8 +20,8 @@ export default function Accounts() {
   const checking = useMemo(() => accounts.find(a => a.type === "CHECKING"), [accounts]);
   const savings  = useMemo(() => accounts.find(a => a.type === "SAVINGS"), [accounts]);
 
-  const load = async () => {
-    setLoading(true);
+  const load = async (silent = false) => {
+    if (!silent) setLoading(true);
     const res = await api.get("/api/client/accounts");
     setAccounts(res.data);
     setLoading(false);
@@ -40,13 +41,13 @@ export default function Accounts() {
       });
       setOk("Transfer successful");
       clearAmount("");
-      await load();
+      await load(true);
     } catch (e) {
       setErr(e?.response?.data?.message || "Transfer failed");
     }
   };
 
-  if (loading) return <div className="page-title">Accounts</div>;
+  if (loading) return <AccountsSkeleton />;
 
   return (
     <div>
@@ -67,7 +68,7 @@ export default function Accounts() {
 
               <div style={{ display: "grid", gridTemplateColumns: "170px 1fr", rowGap: 15 }}>
                 <div style={{ opacity: 0.7 }}>Account Number:</div>
-                <div style={{ fontWeight: 700 }}>{checking.accountNumberLast8}</div>
+                <div style={{ fontWeight: 700 }}>{checking.accountNumber16}</div>
 
                 <div style={{ opacity: 0.7 }}>Transaction Limit:</div>
                 <div style={{ fontWeight: 700 }}>${Number(checking.weeklyLimit).toFixed(0)}</div>
@@ -87,7 +88,7 @@ export default function Accounts() {
 
               <div style={{ display: "grid", gridTemplateColumns: "170px 1fr", rowGap: 15 }}>
                 <div style={{ opacity: 0.7 }}>Account Number:</div>
-                <div style={{ fontWeight: 700 }}>{savings.accountNumberLast8}</div>
+                <div style={{ fontWeight: 700 }}>{savings.accountNumber16}</div>
 
                 <div style={{ opacity: 0.7 }}>Withdrawal Limit:</div>
                 <div style={{ fontWeight: 700 }}>${Number(savings.weeklyLimit).toFixed(0)}</div>

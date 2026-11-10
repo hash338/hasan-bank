@@ -3,6 +3,7 @@ import { api } from "../../api/http";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
+import { AiBotSkeleton } from "../../ui/Skeletons";
 
 export default function AiBot() {
     const [conversationId, setConversationId] = useState(null);
@@ -10,6 +11,7 @@ export default function AiBot() {
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
+    const [booting, setBooting] = useState(true);
     const [err, setErr] = useState("");
 
     const bottomRef = useRef(null);
@@ -130,6 +132,7 @@ export default function AiBot() {
                 setErr(e?.response?.data?.message || "Failed to load AI");
             } finally {
                 setLoading(false);
+                setBooting(false);
             }
         })();
     }, []);
@@ -139,6 +142,8 @@ export default function AiBot() {
         if (!conversationId) return;
         loadHistory(conversationId).catch(() => { });
     }, [conversationId]);
+
+    if (booting) return <AiBotSkeleton />;
 
     return (
         <div>

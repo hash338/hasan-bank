@@ -3,6 +3,7 @@ import { api } from "../../api/http";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
+import { ProfileSkeleton } from "../../ui/Skeletons";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
@@ -104,7 +105,7 @@ export default function Profile() {
     }
   };
 
-  if (loading) return <div className="page-title">Profile</div>;
+  if (loading) return <ProfileSkeleton />;
 
   return (
     <div>

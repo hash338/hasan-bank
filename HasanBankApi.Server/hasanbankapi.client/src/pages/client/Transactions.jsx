@@ -3,6 +3,7 @@ import { api } from "../../api/http";
 import Card from "../../ui/Card";
 import TransactionRow from "../../ui/TransactionRow";
 import MessageDialog from "../../ui/MessageDialog";
+import { TransactionsSkeleton } from "../../ui/Skeletons";
 
 export default function Transactions() {
   const [txs, setTxs] = useState([]);
@@ -28,7 +29,7 @@ export default function Transactions() {
     })();
   }, []);
 
-  if (loading) return <div className="page-title">Transactions</div>;
+  if (loading) return <TransactionsSkeleton />;
 
   return (
     <div>

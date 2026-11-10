@@ -7,45 +7,53 @@ export default function Login() {
   const nav = useNavigate();
   const location = useLocation();
 
-  const [type, setType] = useState("CLIENT");
-  const [username, setUsername] = useState("");
-  const [payee, setPayee] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
-
-  const resetForm = () => {
-    setType("CLIENT");
-    setUsername("");
-    setPayee("");
-    setPassword("");
-    setErr("");
-  };
+  const [busy, setBusy] = useState(false);
 
   //  Reset every time we NAVIGATE to /login (works after logout)
   useEffect(() => {
-    resetForm();
+    setIdentifier("");
+    setPassword("");
+    setErr("");
+    setBusy(false);
   }, [location.key]);
 
+  // "@..."  → client (payee address)
+  // anything else → admin username
+  const isClient = identifier.trim().startsWith("@");
+
   const submit = async () => {
+    if (busy) return;
+
     setErr("");
 
-    const u = username.trim();
+    const id = identifier.trim();
     const p = password.trim();
-    const pa = payee.trim();
 
+    if (!id || !p) {
+      setErr(isClient ? "Payee address and password required" : "Username and password required");
+      return;
+    }
+
+    setBusy(true);
     try {
-      if (type === "ADMIN") {
-        if (!u || !p) { setErr("Username and password required"); return; }
-        await loginAdmin(u, p);
-        nav("/admin/create-client", { replace: true });
-      } else {
-        if (!pa || !p) { setErr("Payee address and password required"); return; }
-        await loginClient(pa, p);
+      if (isClient) {
+        await loginClient(id, p);
         nav("/client/dashboard", { replace: true });
+      } else {
+        await loginAdmin(id, p);
+        nav("/admin/create-client", { replace: true });
       }
     } catch (e) {
       setErr(e?.response?.data?.message || "Login failed");
+      setBusy(false);
     }
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") submit();
   };
 
   return (
@@ -94,48 +102,39 @@ export default function Login() {
       {/* RIGHT FORM */}
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: 520 }}>
-          <div style={{ fontSize: 18, marginBottom: 10 }}>Choose Your Account Type:</div>
+          <div style={{ fontSize: 18, marginBottom: 6 }}>Sign in to your account</div>
+          <div style={{ fontSize: 13, opacity: 0.6, marginBottom: 18 }}>
+            Start with <b>@</b> for a client payee address, or type your admin username.
+          </div>
 
-          <select
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            style={{ width: 140, padding: 10, marginBottom: 16 }}
-            autoComplete="off"
-          >
-            <option value="CLIENT">CLIENT</option>
-            <option value="ADMIN">ADMIN</option>
-          </select>
-
-          {type === "ADMIN" ? (
-            <>
-              <div style={{ margin: "10px 0 6px" }}>Username:</div>
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                style={{ width: "100%", padding: 12, border: "1px solid var(--line)", borderRadius: 6 }}
-                autoComplete="off"
-                name="hb_admin_username"
-              />
-            </>
-          ) : (
-            <>
-              <div style={{ margin: "10px 0 6px" }}>Payee Address:</div>
-              <input
-                value={payee}
-                onChange={(e) => setPayee(e.target.value)}
-                placeholder="@payee"
-                style={{ width: "100%", padding: 12, border: "1px solid var(--line)", borderRadius: 6 }}
-                autoComplete="off"
-                name="hb_client_payee"
-              />
-            </>
-          )}
+          <div style={{ margin: "10px 0 6px" }}>Username or Payee Address:</div>
+          <div style={{ position: "relative" }}>
+            <input
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              onKeyDown={onKeyDown}
+              placeholder="admin  or  @payee"
+              style={{
+                width: "100%",
+                padding: "12px 110px 12px 12px",
+                border: "1px solid var(--line)",
+                borderRadius: 6,
+              }}
+              autoComplete="off"
+              name="hb_identifier"
+              autoFocus
+            />
+            <span className={isClient ? "mode-pill client" : "mode-pill admin"}>
+              {isClient ? "Client" : "Admin"}
+            </span>
+          </div>
 
           <div style={{ margin: "14px 0 6px" }}>Password:</div>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={onKeyDown}
             style={{ width: "100%", padding: 12, border: "1px solid var(--line)", borderRadius: 6 }}
             autoComplete="new-password"
             name="hb_password"
@@ -146,6 +145,7 @@ export default function Login() {
           <button
             type="button"
             onClick={submit}
+            disabled={busy}
             style={{
               width: "100%",
               marginTop: 18,
@@ -155,9 +155,11 @@ export default function Login() {
               border: 0,
               borderRadius: 6,
               fontSize: 16,
+              opacity: busy ? 0.7 : 1,
+              cursor: busy ? "progress" : "pointer",
             }}
           >
-            Login
+            {busy ? "Signing in…" : "Login"}
           </button>
         </div>
       </div>

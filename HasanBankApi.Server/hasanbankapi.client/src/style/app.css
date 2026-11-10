@@ -233,3 +233,79 @@
     width: 92px;
     text-align: right;
 }
+
+/* ── Skeleton loading ─────────────────────────────────────
+   Shimmer blocks shown while a page fetches its data, so a
+   hard refresh never renders an empty shell. */
+.sk {
+    position: relative;
+    overflow: hidden;
+    background: #e9edeb;
+    border-radius: 8px;
+    flex: none;
+}
+
+.sk::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.75) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: hbShimmer 1.35s ease-in-out infinite;
+}
+
+.sk-dark {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.sk-dark::after {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.22) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+}
+
+@keyframes hbShimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sk::after {
+        animation: none;
+    }
+}
+
+/* ── Login: auto-detected account type pill ───────────── */
+.mode-pill {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    pointer-events: none;
+    border: 1px solid transparent;
+}
+
+.mode-pill.admin {
+    background: #eef2f0;
+    color: var(--green);
+    border-color: var(--line);
+}
+
+.mode-pill.client {
+    background: var(--green);
+    color: #fff;
+}

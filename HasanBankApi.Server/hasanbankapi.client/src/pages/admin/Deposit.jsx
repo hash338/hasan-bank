@@ -3,10 +3,12 @@ import { api } from "../../api/http";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
+import { ClientSearchSkeleton } from "../../ui/Skeletons";
 
 export default function Deposit() {
   const [payee, setPayee] = useState("");
   const [found, setFound] = useState(null); // search result
+  const [searching, setSearching] = useState(false);
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
 
@@ -20,10 +22,11 @@ export default function Deposit() {
     return accounts.map(a => a.type);
   }, [accounts]);
 
-  const search = async () => {
+  const search = async (silent = false) => {
     setErr(""); setOk("");
     setFound(null);
     setTargetType("");
+    if (!silent) setSearching(true);
     try {
       const res = await api.get(`/api/admin/clients/search?payeeAddress=${encodeURIComponent(payee.trim())}`);
       setFound(res.data);
@@ -34,6 +37,8 @@ export default function Deposit() {
       }
     } catch (e) {
       setErr(e?.response?.data?.message || "Client not found");
+    } finally {
+      setSearching(false);
     }
   };
 
@@ -59,7 +64,7 @@ export default function Deposit() {
       setAmount("");
 
       // re-search to update balances on screen
-      await search();
+      await search(true);
     } catch (e) {
       setErr(e?.response?.data?.message || "Deposit failed");
     }
@@ -81,8 +86,10 @@ export default function Deposit() {
             <div style={{ fontSize: 13, opacity: 0.7 }}>Payee Address</div>
             <Input value={payee} onChange={(e) => setPayee(e.target.value)} placeholder="@payee" />
 
-            <Button onClick={search} style={{ width: 220 }}>Search</Button>
+            <Button onClick={() => search()} style={{ width: 220 }}>Search</Button>
           </div>
+
+          {searching && <ClientSearchSkeleton />}
 
           {found && (
             <div style={{ marginTop: 18, borderTop: "1px solid var(--line)", paddingTop: 14 }}>

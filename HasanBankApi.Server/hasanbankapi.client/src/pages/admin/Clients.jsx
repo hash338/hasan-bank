@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../api/http";
 import Card from "../../ui/Card";
 import ConfirmDialog from "../../ui/ConfirmDialog";
+import { ClientsSkeleton } from "../../ui/Skeletons";
 
 export default function Clients() {
   const [clients, setClients] = useState([]);
@@ -51,6 +52,8 @@ export default function Clients() {
     }
   };
 
+  if (loading) return <ClientsSkeleton />;
+
   return (
     <div>
       <div className="page-title">Clients</div>
@@ -59,9 +62,7 @@ export default function Clients() {
       {ok && <div style={{ color: "green", fontWeight: 700, marginBottom: 10 }}>{ok}</div>}
 
       <Card>
-        {loading ? (
-          <div style={{ padding: 14, opacity: 0.7 }}>Loading…</div>
-        ) : clients.length === 0 ? (
+        {clients.length === 0 ? (
           <div style={{ padding: 14, opacity: 0.7 }}>No clients.</div>
         ) : (
           <div style={{ padding: "6px 10px" }}>

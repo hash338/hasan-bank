@@ -104,7 +104,7 @@ export default function Login() {
         <div style={{ width: 520 }}>
           <div style={{ fontSize: 18, marginBottom: 6 }}>Sign in to your account</div>
           <div style={{ fontSize: 13, opacity: 0.6, marginBottom: 18 }}>
-            Start with <b>@</b> for a client payee address, or type your admin username.
+            Start with <b>@</b> for a client payee address.
           </div>
 
           <div style={{ margin: "10px 0 6px" }}>Username or Payee Address:</div>
@@ -113,7 +113,7 @@ export default function Login() {
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               onKeyDown={onKeyDown}
-              placeholder="admin  or  @payee"
+              placeholder="@payee"
               style={{
                 width: "100%",
                 padding: "12px 110px 12px 12px",

@@ -1,4 +1,4 @@
-.app-shell {
+﻿.app-shell {
     display: flex;
     height: 100vh;
     background: #fff;
@@ -234,7 +234,7 @@
     text-align: right;
 }
 
-/* ── Skeleton loading ─────────────────────────────────────
+/* â”€â”€ Skeleton loading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Shimmer blocks shown while a page fetches its data, so a
    hard refresh never renders an empty shell. */
 .sk {
@@ -282,30 +282,4 @@
     .sk::after {
         animation: none;
     }
-}
-
-/* ── Login: auto-detected account type pill ───────────── */
-.mode-pill {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    padding: 5px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    pointer-events: none;
-    border: 1px solid transparent;
-}
-
-.mode-pill.admin {
-    background: #eef2f0;
-    color: var(--green);
-    border-color: var(--line);
-}
-
-.mode-pill.client {
-    background: var(--green);
-    color: #fff;
 }

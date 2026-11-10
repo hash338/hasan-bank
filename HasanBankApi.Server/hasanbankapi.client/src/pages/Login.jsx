@@ -108,26 +108,21 @@ export default function Login() {
           </div>
 
           <div style={{ margin: "10px 0 6px" }}>Username or Payee Address:</div>
-          <div style={{ position: "relative" }}>
-            <input
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="@payee"
-              style={{
-                width: "100%",
-                padding: "12px 110px 12px 12px",
-                border: "1px solid var(--line)",
-                borderRadius: 6,
-              }}
-              autoComplete="off"
-              name="hb_identifier"
-              autoFocus
-            />
-            <span className={isClient ? "mode-pill client" : "mode-pill admin"}>
-              {isClient ? "Client" : "Admin"}
-            </span>
-          </div>
+          <input
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="@payee"
+            style={{
+              width: "100%",
+              padding: 12,
+              border: "1px solid var(--line)",
+              borderRadius: 6,
+            }}
+            autoComplete="off"
+            name="hb_identifier"
+            autoFocus
+          />
 
           <div style={{ margin: "14px 0 6px" }}>Password:</div>
           <input

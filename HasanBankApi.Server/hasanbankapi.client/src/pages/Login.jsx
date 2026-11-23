@@ -107,7 +107,7 @@ export default function Login() {
             Start with <b>@</b> for a client payee address.
           </div>
 
-          <div style={{ margin: "10px 0 6px" }}>Username or Payee Address:</div>
+          <div style={{ margin: "10px 0 6px" }}>Payee Address:</div>
           <input
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
